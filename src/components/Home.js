@@ -39,7 +39,6 @@ const Home = () => {
       country.name.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredData(newCountries);
-    console.log(newCountries);
   }, [countries, search, setFilteredData]);
 
   return (

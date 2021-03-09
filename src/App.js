@@ -6,8 +6,8 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/:slug" component={Details} />
         <Route exact path="/" component={Home} />
-        <Route path="/:country" component={Details} />
       </Switch>
     </Router>
   );
