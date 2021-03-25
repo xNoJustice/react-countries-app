@@ -1,3 +1,7 @@
+<img src="https://github.com/xNoJustice/react-countries-app/blob/34920a2a51c25831f6c2a1effd0e16f1e6437205/countriesapp1.png" />
+
+<img src="https://github.com/xNoJustice/react-countries-app/blob/34920a2a51c25831f6c2a1effd0e16f1e6437205/countriesapp2.png" />
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
