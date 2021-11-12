@@ -15,9 +15,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://restcountries.eu/rest/v2/all?fields=name;population;region;capital;flag"
-        );
+        const response = await fetch("https://restcountries.com/v3.1/all");
         const json = await response.json();
         setCountries(json);
       } catch (error) {
@@ -36,7 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     const newCountries = countries.filter((country) =>
-      country.name.toLowerCase().includes(search.toLowerCase())
+      country.name.common.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredData(newCountries);
   }, [countries, search, setFilteredData]);
@@ -68,7 +66,7 @@ const Home = () => {
                 className="flex flex-wrap shadow-lg rounded-lg dark:bg-gray-800 m-5"
                 style={{ width: "21rem" }}
                 key={i}
-                to={"/" + country.name}
+                to={"/" + country.name.common}
               >
                 <div className="w-full pb-1 md:pb-2">
                   <Country country={country} />

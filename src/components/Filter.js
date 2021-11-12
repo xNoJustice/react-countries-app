@@ -11,11 +11,7 @@ const Filter = (props) => {
           onChange={(e) => props.setFilter(e.target.value)}
         >
           {regions.map((region) => (
-            <option
-              key={region}
-              value={region}
-              defaultValue={props.filter === region.value}
-            >
+            <option key={region} value={region}>
               {region}
             </option>
           ))}

@@ -2,7 +2,7 @@ const Country = (props) => {
   return (
     <div>
       <img
-        src={props.country.flag}
+        src={props.country.flags.png}
         alt="country"
         className="object-cover"
         style={{
@@ -11,7 +11,9 @@ const Country = (props) => {
         }}
       />
       <div className="ml-4 mt-3">
-        <div className="text-2xl font-bold mb-1">{props.country.name}</div>
+        <div className="text-2xl font-bold mb-1">
+          {props.country.name.common}
+        </div>
         <div>
           <span className="font-bold">Population : </span>
           {props.country.population.toLocaleString("en-GB").replace(/,/g, ".")}

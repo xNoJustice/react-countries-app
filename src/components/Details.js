@@ -4,27 +4,16 @@ import { Link, useParams } from "react-router-dom";
 const Details = () => {
   const { slug } = useParams();
   const [country, setCountry] = useState([]);
-  const [borders, setBorders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    const url = "https://restcountries.eu/rest/v2";
-
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${url}/name/${slug}?fields=name;nativeName;population;region;subregion;capital;topLevelDomain;currencies;languages;borders;flag`
+          `https://restcountries.com/v3.1/name/${slug}`
         );
         const json = await response.json();
-
-        if (json[0].borders.length) {
-          const response2 = await fetch(
-            `${url}/alpha?fields=name&codes=${json[0].borders.join(";")}`
-          );
-          const json2 = await response2.json();
-          setBorders(json2);
-        }
         setCountry(json[0]);
         setIsLoading(false);
       } catch (error) {
@@ -34,17 +23,29 @@ const Details = () => {
     fetchData();
   }, [slug]);
 
-  const languages = country.languages?.map((language) => language.name);
-  const currencies = country.currencies?.map((currency) => currency.name);
+  let languages = [],
+    currencies = [];
+
+  if (country.languages) {
+    Object.keys(country.languages).map((language) =>
+      languages.push(country.languages[language])
+    );
+  }
+
+  if (country.currencies) {
+    Object.keys(country.currencies).map((currency) =>
+      currencies.push(country.currencies[currency].name)
+    );
+  }
 
   return (
-    <section class="min-h-screen min-w-full text-gray-700 dark:text-white body-font">
-      <div class="container flex flex-col items-center px-5 py-16 mx-auto lg:px-20 lg:py-24 md:flex-row">
+    <section className="min-h-screen min-w-full text-gray-700 dark:text-white body-font">
+      <div className="container flex flex-col items-center px-5 py-16 mx-auto lg:px-20 lg:py-24 md:flex-row">
         {isLoading ? (
           <div>Loading ...</div>
         ) : (
           <>
-            <div class="w-5/6 mb-10 lg:max-w-lg lg:w-full md:w-1/2 md:mb-0">
+            <div className="w-5/6 mb-10 lg:max-w-lg lg:w-full md:w-1/2 md:mb-0">
               <div className="mb-5">
                 <Link
                   to="/"
@@ -68,22 +69,22 @@ const Details = () => {
               </div>
 
               <img
-                class="object-cover object-center rounded"
-                src={country.flag}
-                alt={country.name}
+                className="object-cover object-center rounded"
+                src={country.flags.png}
+                alt={country.name.common}
               />
             </div>
-            <div class="flex flex-col items-center text-center lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left">
-              <h1 class="mb-8 text-2xl font-bold tracking-tighter text-center text-black dark:text-white lg:text-left lg:text-5xl title-font">
-                {country.name}
+            <div className="flex flex-col items-center text-center lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left">
+              <h1 className="mb-8 text-2xl font-bold tracking-tighter text-center text-black dark:text-white lg:text-left lg:text-5xl title-font">
+                {country.name.common}
               </h1>
-              <div class="flex flex-wrap -mx-4 -mt-4 -mb-10 sm:-m-4 ">
-                <div class="flex flex-col items-center p-4 mb-6 text-center md:w-1/2 md:mb-0 lg:text-left lg:items-start">
-                  <div class="flex-grow">
-                    <p class="text-base leading-relaxed">
+              <div className="flex flex-wrap -mx-4 -mt-4 -mb-10 sm:-m-4 ">
+                <div className="flex flex-col items-center p-4 mb-6 text-center md:w-1/2 md:mb-0 lg:text-left lg:items-start">
+                  <div className="flex-grow">
+                    <p className="text-base leading-relaxed">
                       <span className="block">
                         <span className="font-bold">Native Name: </span>
-                        {country.nativeName}
+                        {country.name.common}
                       </span>
                       <span className="block">
                         <span className="font-bold">Region: </span>
@@ -95,16 +96,16 @@ const Details = () => {
                       </span>
                       <span className="block">
                         <span className="font-bold">Currencies: </span>
-                        {typeof currencies === "object"
+                        {currencies.length > 1
                           ? currencies.join(", ")
-                          : currencies}
+                          : currencies[0]}
                       </span>
                     </p>
                   </div>
                 </div>
-                <div class="flex flex-col items-center p-4 mb-6 text-center md:w-1/2 md:mb-0 lg:text-left lg:items-start">
-                  <div class="flex-grow">
-                    <p class="text-base leading-relaxed">
+                <div className="flex flex-col items-center p-4 mb-6 text-center md:w-1/2 md:mb-0 lg:text-left lg:items-start">
+                  <div className="flex-grow">
+                    <p className="text-base leading-relaxed">
                       <span className="block">
                         <span className="font-bold">Population: </span>
                         {country.population
@@ -116,30 +117,14 @@ const Details = () => {
                         {country.subregion}
                       </span>
                       <span className="block">
-                        <span className="font-bold">Top Level Domain: </span>
-                        {country.topLevelDomain}
-                      </span>
-                      <span className="block">
                         <span className="font-bold">Languages: </span>
-                        {typeof languages === "object"
+                        {languages.length > 1
                           ? languages.join(", ")
-                          : languages}
+                          : languages[0]}
                       </span>
                     </p>
                   </div>
                 </div>
-                <span className="block mt-3">
-                  <span className="font-bold text-lg">Border Countries: </span>
-                  {borders.map((border, i) => (
-                    <Link
-                      className="mr-1 bg-gray-700 dark:bg-gray-700 text-base p-1 rounded-lg hover:bg-gray-500"
-                      key={i}
-                      to={"/" + border.name}
-                    >
-                      {border.name}
-                    </Link>
-                  ))}
-                </span>
               </div>
             </div>
           </>
