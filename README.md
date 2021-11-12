@@ -1,6 +1,6 @@
 <img src="https://github.com/xNoJustice/react-countries-app/blob/34920a2a51c25831f6c2a1effd0e16f1e6437205/countriesapp1.png" />
 
-<img src="https://github.com/xNoJustice/react-countries-app/blob/34920a2a51c25831f6c2a1effd0e16f1e6437205/countriesapp2.png" />
+<img src="https://github.com/xNoJustice/react-countries-app/blob/3f0fe95fe5d9444657efaec1c47481b88fb6a089/countriesapp2.png" />
 
 # Getting Started with Create React App
 
