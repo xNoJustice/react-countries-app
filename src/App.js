@@ -1,15 +1,16 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import Home from "./components/Home";
 import Details from "./components/Details";
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/:slug" component={Details} />
-        <Route exact path="/" component={Home} />
-      </Switch>
-    </Router>
+    <div className="bg-gray-200 dark:bg-gray-900 w-full flex justify-center items-center font-sans">
+      <Routes>
+        <Route path="/:slug" element={<Details />} />
+        <Route exact path="/" element={<Home />} />
+      </Routes>
+      <Outlet />
+    </div>
   );
 }
 
